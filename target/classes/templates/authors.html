@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        table.border {border: black solid; border-collapse: collapse; margin: auto;}
+        table.border td {border: black solid thin}
+        table.noborder td {border: none}
+        
+    </style>
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+
+
+</head>
+<body>
+
+    <h1 class="heading">Authors Page</h1>
+    <div th:insert="fragments/frags :: navbar" class="navbar">
+    </div>
+
+    <h1 class="heading">Find Author With Their Last Name Starting With The Specified Letter</h1>
+    <form action="/LastNameStartingWith" class="center">
+        <label for="letter">Last Name Starts With</label>
+        <input type="text" name="letter" , id="letter" />
+        <br />
+        <input type="submit" value="Send" />
+    </form>
+    <br />
+
+    <h1 class="heading">Find Author With Their Last Name Containing The Specified Letters</h1>
+    <form action="/LastNameContaining" class="center">
+        <label for="sequence">Last Name Contains</label>
+        <input type="text" name="sequence" , id="sequence" />
+        <br />
+        <input type="submit" value="Send" />
+    </form>
+    <br />
+
+    <!--? Displays a table containing the authors' first and last names along with the books they wrote-->
+    <table class="border">
+        <tr>
+            <th colspan="2">Authors</th>
+            <tr th:each="author:${authors}">
+                <td th:text="${author.firstName}"></td>
+                <td th:text="${author.lastName}"></td>
+                <td>
+                    <table class='noborder'>
+                        <tr th:each="book:${author.books}">
+                                <td th:text="${book.title}"></td>
+
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </tr>
+
+    </table>
+
+
+</body>
+</html>

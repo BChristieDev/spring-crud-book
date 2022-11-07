@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<style>
+			table,
+			td,
+			th {
+				border: black solid;
+			}
+			table {
+				border-collapse: collapse;
+				margin: auto;
+			}
+		</style>
+		<link rel="stylesheet" th:href="@{/css/styles.css}" />
+	</head>
+	<body>
+		<h1 class="heading">Books Page</h1>
+
+		<div th:insert="fragments/frags :: navbar" class="navbar"></div>
+
+		<h1 class="heading">Find Book via Author Name</h1>
+		<!--? Gets the first and last names from the user via textbox and sends the value to BookController.java -->
+		<form action="/books" class="center">
+			<label for="firstName">Author First Name</label>
+			<input type="text" name="firstName" , id="firstName" />
+			<!--? firstName matches name and case of the @RequestParam in BookController.java-->
+			<br />
+			<label for="lastName">Author Last Name</label>
+			<input type="text" name="lastName" , id="lastName" />
+			<!--? lastName matches name and case of the @RequestParam in BookController.java-->
+			<br />
+			<input type="submit" value="Send" />
+		</form>
+
+		<br />
+
+		<h1 class="heading">Sort Books by Least Expensive to Most Expensive</h1>
+		<form action="/OrderByPriceDesc" class="center">
+			<input type="submit" value="Sort Price" />
+		</form>
+		<br />
+
+		<h1 class="heading">Select Two Words to Filter by Book Names Containing Those Words</h1>
+		<form action="/TitleContainingAndTitleContaining" class="center">
+			<label for="keyword1">Contains First Word</label>
+			<input type="text" name="keyword1" , id="keyword1" />
+			<br />
+			<label for="keyword2">Contains Second Word</label>
+			<input type="text" name="keyword2" , id="keyword2" />
+			<br />
+			<input type="submit" value="Send" />
+		</form>
+		<br />
+
+		<h1 class="heading">Select One Word to Filter by Book Names Not Containing That Word</h1>
+		<form action="/TitleNotContaining" class="center">
+			<label for="keyword">Doesn't Contain</label>
+			<input type="text" name="keyword" , id="keyword" />
+			<br />
+			<input type="submit" value="Send" />
+		</form>
+		<br />
+
+		<h1 class="heading">Select One Word for the Title to Contain and Another Word for the Title to Not Contain</h1>
+		<form action="/TitleContainingAndTitleNotContaining" class="center">
+			<label for="isKeyword">Contains First Word</label>
+			<input type="text" name="isKeyword" , id="isKeyword1" />
+			<br />
+			<label for="notKeyword">Doesn't Contain Second Word</label>
+			<input type="text" name="notKeyword" , id="notKeyword" />
+			<br />
+			<input type="submit" value="Send" />
+		</form>
+		<br />
+
+		<!--? If both a first and last name are specified, the table will display the authors first and last name along with any books they wrote -->
+		<table>
+			<tr>
+				<th>Title</th>
+				<th colspan="2">Author</th>
+			</tr>
+			<tr th:each="book:${books}">
+				<td th:text="${book.title}"></td>
+				<td colspan="2" th:text="${book.author.firstName} + ' ' + ${book.author.lastName}"></td>
+			</tr>
+		</table>
+	</body>
+</html>
